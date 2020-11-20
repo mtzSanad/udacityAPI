@@ -1,0 +1,21 @@
+Course Topics:
+APIs: What, Why, How
+Handling HTTP Requests
+Routing and API Endpoints
+Documentation
+Testing
+
+Technologies
+Flask
+Flask-CORS
+SQLAlchemy
+JSONify
+Unittest
+
+Lesson Overview: Introduction to APIs
+Before you start development, you should conceptually understand what you're doing. In this first lesson, you'll gain that foundational knowledge. Here's what we'll go over:
+
+What are APIs?
+Benefits of APIs
+IP Communication
+RESTful APIs
