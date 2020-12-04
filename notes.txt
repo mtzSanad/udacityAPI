@@ -2,6 +2,9 @@ Auto pip8 - autopep8 -a -a -I file_name.py
 node module .ignore
 text file documentation
 
+Design data intensive application
+Clean architecture
+
 Course Topics:
 APIs: What, Why, How
 Handling HTTP Requests
@@ -290,3 +293,72 @@ List of HTTP request types allowed
 Access-Control-Allow-Headers
 List of http request header values the server will allow, particularly useful if you use any custom headers
 
+===================
+
+Variable Rules
+In our endpoint naming scheme we follow collection/item/collection. In order to handle that variable item. In order to handle that variability in Flask, you add a <variable_name> within the path argument of the `@app.route` decorator, which is then passed to the function as a keyword argument variable_name.
+
+You can also specify the type of the argument by using <converter:variable_name> syntax.
+
+@app.route('/entrees/<int:entree_id>')
+def retrieve_entree(entree_id):
+    return 'Entree %d' % entree_id
+
+By default, the @app.route decorator answers only get requests. In order to enable more requests types, pass the method parameter to the decorate including a list of string methods.
+
+@app.route('/hello', methods=['GET', 'POST'])
+def greeting():
+    if request.method == 'POST':
+        return create_greeting()
+    else:
+        return send_greeting()
+
+
+
+Pagination in Flask
+When handling large collections of data, attempting to serialize and send all of that data to the frontend will slow down the response and rendering to the client.
+
+A common way to handle this issue is to paginate the data you're sending, and send it in chunks instead. Similar to variables discussed above, flask can handle request arguments to get additional request conditions such as page or search terms.
+
+
+Query Parameters
+The below examples show the format of query parameters. When writing query parameters convention dictates that:
+
+A question mark precedes the query parameters
+Parameters are in key=value pairs with an equal sign in between the key and value
+Sets of parameters are separated by an ampersand
+www.example.com/entrees?page=1
+
+www.example.com/entrees?page=1&allergens=peanut 
+
+=================================== ERROR HANDLING ==================
+
+abort(404)
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+In addition, we want to ensure all of our server responses have consistent formatting and that we provide adequate information to the client regarding the error. The `@app.errorhandler` decorator allows you to specify the behavior for expected errors. When using this decorator take into consideration:
+
+passing the status code or Python error as an argument to the decorator
+logical naming of the function handler
+consistent formatting and messaging of the JSON object response
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({
+        "success": False, 
+        "error": 404,
+        "message": "Not found"
+        }), 404
+
+
+In this lesson we learned how to extend our functionality using Flask-CORS, so that we could:
+
+Organize API Endpoints
+Handle Cross-Origin Resource Sharing (CORS)
+Parse the request path and body
+Use POST, PATCH, and DELETE requests in Flask
+Handle errors
+Next up, we'll dive into testing, and how we can use unit tests to make the process of testing much faster.

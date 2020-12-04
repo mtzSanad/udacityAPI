@@ -1,0 +1,93 @@
+As with any code you write, you want to test your API to ensure that requests are processed as you expect, the responses sent are correct, and the operations performed on the database are correct and persist.
+
+In this lesson we'll cover:
+
+Purpose and Benefits of API Testing
+Testing a Flask Api with Unittest
+Test-Driven Development for APIs
+Why Testing?
+As with all tests, writing unittests for your API verifies the behavior. For APIs, test should be written:
+
+To confirm expected request handling behavior
+To confirm success-response structure is correct
+To confirm expected errors are handled appropriately
+To confirm CRUD operations persist
+In addition to verifying behavior, having a thorough test suite ensures that when you update your API, you can easily test all previous functionality.
+
+If bugs are discovered while in development, they cost next to nothing to fix and don't have any negative impact on business outcomes or client experience. But if bugs make it to production, their cost can be quite large—they can impact performance, and fixing bugs can take large amounts of time for big, production applications.
+
+The order of operations for app development should always be:
+
+Development
+Unit Testing
+Quality Assurance
+Production
+Step 2 is essential to ensuring the application is production-ready and time-to-production is used efficiently.
+
+
+
+Unittest Flask Key Structures
+As we just saw, all of your Flask application tests will follow the same format:
+
+Define the test case class for the application (or section of the application, for larger applications).
+Define and implement the setUp function. It will be executed before each test and is where you should initialize the app and test client, as well as any other context your tests will need. The Flask library provides a test client for the application, accessed as shown below.
+Define the tearDown method, which is implemented after each test. It will run as long as setUp executes successfully, regardless of test success.
+Define your tests. All should begin with "test_" and include a doc string about the purpose of the test. In defining the tests, you will need to:
+Get the response by having the client make a request
+Use self.assertEqual to check the status code and all other relevant operations.
+Run the test suite, by running python test_file_name.py from the command line.
+Here's that same code (from the notebook above), for your reference:
+
+class AppNameTestCase(unittest.TestCase):
+    """This class represents the ___ test case"""
+
+    def setUp(self):
+        """Executed before each test. Define test variables and initialize app."""
+        self.client = app.test_client
+        pass
+
+    def tearDown(self):
+        """Executed after reach test"""
+        pass
+
+    def test_given_behavior(self):
+        """Test _____________ """
+        res = self.client().get('/')
+
+        self.assertEqual(res.status_code, 200)
+
+# Make the tests conveniently executable
+if __name__ == "__main__":
+unittest.main()
+
+
+
+
+
+Test-Driven Development (or TDD) is a software development paradigm used very commonly in production. It is based on a short, rapid development cycle in which tests are written before the executable code and constantly iterated on.
+
+Write test for specific application behavior.
+Run the tests and watch them fail.
+Write code to execute the required behavior.
+Test the code and rewrite as necessary to pass the test
+Refactor your code.
+Repeat - write your next test.
+Often while pair programming, one partner will write the test and the other will write the executable code, after which the partner will switch. This process is helpful for checking assumptions about behavior and making sure all expected behavior is captured.
+
+
+
+
+
+
+At this point, you now know how to build an API that:
+
+Handles multiple kinds of requests
+Can handle a request body
+Can format both successful responses and error responses
+And in this lesson, you also learned how to:
+
+Test your API using Unittest
+Build your API using Test-Driven Development (TDD)
+By taking this approach in your future development, you'll be able to produce applications in a way that catches issues prior to putting them in front of the user, and in a way that makes it easier to maintain that quality as the app grows.
+
+Next, we'll be looking at how to make your API usable by others, through writing API documentation. Onwards!
